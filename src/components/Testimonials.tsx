@@ -14,28 +14,28 @@ gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   {
-    name: 'Sarah Mitchell',
+    name: 'Sarath and Sarah Sarath',
     project: 'Residential Villa',
     rating: 3,
-    text: '9 Architects transformed our dream home into reality. Their attention to detail and innovative design approach exceeded all expectations.',
+    text: 'You have come to the right place if you want to create a home of exceptional quality and according to your specifications. Without a hitch, 9 Architects will construct your ideal space. Dear Team 9 Architects, thank you from the bottom of my heart.'
   },
   {
-    name: 'James Anderson',
+    name: 'Koushik Neelakantan',
     project: 'Corporate Office',
     rating: 5,
-    text: 'Professional, creative, and efficient. The team delivered a stunning office space that perfectly balances form and function.',
+    text: 'We had like to express our gratitude to 9 Architects for their outstanding job. The group works well together and knows what they are doing. Recommended.',
   },
   {
-    name: 'Emily Chen',
+    name: 'Sreejith and Revathi Sreejith',
     project: 'Boutique Hotel',
     rating: 5,
-    text: 'Working with 9 Architects was an absolute pleasure. They brought fresh perspectives and created a unique hospitality experience.',
+    text: 'The top construction firm in Kollam with whom you can entrust any building project. If you are wanting to develop a home or a business, this is a great option.',
   },
   {
-    name: 'Michael Roberts',
+    name: 'Reshma and Rashmi Associates',
     project: 'Urban Loft',
     rating: 5,
-    text: 'Exceptional craftsmanship and design vision. Our urban loft is now a masterpiece of modern architecture.',
+    text: 'Teamwork was excellent, as was synchronisation and attention to detail. Thank you for creating our dream home, team 9 Architects.',
   },
 ];
 
@@ -102,9 +102,9 @@ const Testimonials = () => {
                       <div className="text-xl font-light text-white">
                         {testimonial.name}
                       </div>
-                      <div className="text-sm tracking-wider text-white/60 uppercase">
+                      {/* <div className="text-sm tracking-wider text-white/60 uppercase">
                         {testimonial.project}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </CarouselItem>

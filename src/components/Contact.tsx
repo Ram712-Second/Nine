@@ -66,37 +66,37 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // --- Connect to Google Forms (Headless) ---
-    const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeB2zPTiHhj2atfwmiwkDlrKwq3vQ7V9c4EDrzB9e_r1nztYQ/formResponse';
-
-    // This method requires using FormData and sending an opaque request.
-    const formDataToSubmit = new FormData();
-    formDataToSubmit.append('entry.749987193', formData.name);
-    formDataToSubmit.append('entry.318305727', formData.email);
-    formDataToSubmit.append('entry.1382148214', formData.phone);
-    formDataToSubmit.append('entry.1406642824', formData.message);
-
+  
     try {
-      await fetch(GOOGLE_FORM_ACTION_URL, {
-        method: 'POST',
-        body: formDataToSubmit,
-        mode: 'no-cors', // This is crucial to prevent CORS errors with Google Forms.
-      });
-
-      // Since we can't check the response with 'no-cors', we assume success if fetch doesn't throw an error.
+      const response = await fetch(
+        "https://script.google.com/macros/s/AKfycbzCd7UwSq4TuPxQ7mgdDOGiOsS9txTCC1EFevZjalg3UmyOVEKw3Tr2dK-PJBfKL86J/exec",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            message: formData.message,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
       toast({
-        title: 'Message Sent!',
-        description:
-          'Thank you for contacting us. We will get back to you soon.',
+        title: "Message Sent!",
+        description: "Thank you for contacting us. We will get back to you soon.",
       });
-      setFormData({ name: '', email: '', phone: '', message: '' });
+  
+      setFormData({ name: "", email: "", phone: "", message: "" });
+  
     } catch (error) {
-      console.error('Form submission error:', error);
+      console.error(error);
       toast({
-        title: 'Submission Failed',
-        description: 'Something went wrong. Please try again.',
-        variant: 'destructive',
+        title: "Submission Failed!",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
@@ -165,14 +165,14 @@ const Contact = () => {
 
           <div className="contact-map h-[500px] w-full">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2412648750455!2d-73.98784368459395!3d40.74844097932847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d31534.986574265073!2d76.5573263!3d8.8913681!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b05fc57b969325d%3A0x71d768a2ece68365!2s9architects!5e0!3m2!1sen!2sin!4v1765007240235!5m2!1sen!2sin"
               width="100%"
-              height="100%"
+              height="80%"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              className="grayscale"
+              // className="grayscale"
             />
           </div>
         </div>
@@ -182,3 +182,4 @@ const Contact = () => {
 };
 
 export default Contact;
+
