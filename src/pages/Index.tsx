@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLenis } from '@/hooks/useLenis';
+import { useLoading } from './LoadingContext';
 import Loader from '@/components/Loader';
 import Header from '@/components/Header';
+import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import ClientLogos from '@/components/ClientLogos';
@@ -10,34 +12,31 @@ import Projects from '@/components/Projects';
 import Process from '@/components/Process';
 import Testimonials from '@/components/Testimonials';
 import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
 const Index = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const { isInitialLoad, finishInitialLoad } = useLoading();
 
   useLenis();
 
   useEffect(() => {
     // Prevent scroll during loading
-    if (isLoading) {
+    if (isInitialLoad) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [isLoading]);
+  }, [isInitialLoad]);
 
   return (
     <>
-      {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
+      {isInitialLoad && <Loader onComplete={finishInitialLoad} />}
 
-      {!isLoading && (
-        <div className="dark">
-          <Header />
+      {!isInitialLoad && (
+        <Layout>
           <Hero />
           <About />
           <ClientLogos />
@@ -46,9 +45,8 @@ const Index = () => {
           <Process />
           <Testimonials />
           <Contact />
-          <Footer />
           <WhatsAppButton />
-        </div>
+        </Layout>
       )}
     </>
   );

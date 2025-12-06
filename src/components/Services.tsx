@@ -73,17 +73,34 @@ const Services = () => {
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
+              // <Card
+              //   key={index}
+              //   className="service-card bg-white/5 border-white/10 hover:bg-white/10 transition-all duration-500"
+              // >
+              //   <CardHeader>
+              //     <Icon className="w-12 h-12 mb-4 text-black" strokeWidth={1} />
+              //     <CardTitle className="text-2xl font-light text-black">
+              //       {service.title}
+              //     </CardTitle>
+              //   </CardHeader>
+              //   <CardContent>
+              //     <p className="text-black/70 font-light leading-relaxed">
+              //       {service.description}
+              //     </p>
+              //   </CardContent>
+              // </Card>
               <Card
                 key={index}
-                className="service-card bg-white/5 border-white/10 hover:bg-white/10 transition-all duration-500"
+                className="service-card group relative overflow-hidden bg-gradient-to-br from-white to-gray-50 border border-black/20 hover:border-black/40 transition-all duration-300 rounded-md"
               >
-                <CardHeader>
-                  <Icon className="w-12 h-12 mb-4 text-black" strokeWidth={1} />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/0 via-black/5 to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <CardHeader className="relative z-10">
+                  <Icon className="w-12 h-12 mb-4 text-black group-hover:scale-110 transition-transform duration-300" strokeWidth={1.5} />
                   <CardTitle className="text-2xl font-light text-black">
                     {service.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="relative z-10">
                   <p className="text-black/70 font-light leading-relaxed">
                     {service.description}
                   </p>

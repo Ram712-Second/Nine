@@ -11,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 const Contact = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -52,13 +53,54 @@ const Contact = () => {
     });
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: 'Message Sent!',
-      description: 'Thank you for contacting us. We will get back to you soon.',
-    });
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    setIsSubmitting(true);
+
+    // --- Connect to Google Forms (Headless) ---
+    const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeB2zPTiHhj2atfwmiwkDlrKwq3vQ7V9c4EDrzB9e_r1nztYQ/formResponse';
+
+    // This method requires using FormData and sending an opaque request.
+    const formDataToSubmit = new FormData();
+    formDataToSubmit.append('entry.749987193', formData.name);
+    formDataToSubmit.append('entry.318305727', formData.email);
+    formDataToSubmit.append('entry.1382148214', formData.phone);
+    formDataToSubmit.append('entry.1406642824', formData.message);
+
+    try {
+      await fetch(GOOGLE_FORM_ACTION_URL, {
+        method: 'POST',
+        body: formDataToSubmit,
+        mode: 'no-cors', // This is crucial to prevent CORS errors with Google Forms.
+      });
+
+      // Since we can't check the response with 'no-cors', we assume success if fetch doesn't throw an error.
+      toast({
+        title: 'Message Sent!',
+        description:
+          'Thank you for contacting us. We will get back to you soon.',
+      });
+      setFormData({ name: '', email: '', phone: '', message: '' });
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast({
+        title: 'Submission Failed',
+        description: 'Something went wrong. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -74,45 +116,50 @@ const Contact = () => {
           <form onSubmit={handleSubmit} className="contact-form space-y-6">
             <Input
               type="text"
-              placeholder="Your Name"
+              name="name"
+              placeholder="Enter Your Name"
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={handleChange}
               required
-              className="bg-white border-black/20 text-black placeholder:text-black/50"
+              className="bg-white border-black/50 text-black placeholder:text-black/50"
             />
 
             <Input
               type="email"
-              placeholder="Your Email"
+              name="email"
+              placeholder="Enter Your Email"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={handleChange}
               required
-              className="bg-white border-black/20 text-black placeholder:text-black/50"
+              className="bg-white border-black/50 text-black placeholder:text-black/50"
             />
 
             <Input
               type="tel"
-              placeholder="Your Phone"
+              name="phone"
+              placeholder="Enter Your Phone"
               value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              onChange={handleChange}
               required
-              className="bg-white border-black/20 text-black placeholder:text-black/50"
+              className="bg-white border-black/50 text-black placeholder:text-black/50"
             />
 
             <Textarea
-              placeholder="Your Message"
+              name="message"
+              placeholder="Enter Your Message"
               value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              onChange={handleChange}
               required
               rows={6}
-              className="bg-white border-black/20 text-black placeholder:text-black/50"
+              className="bg-white border-black/50 text-black placeholder:text-black/50"
             />
 
             <Button
               type="submit"
-              className="w-full bg-black text-white hover:bg-black/90 transition-colors duration-300 h-12 text-base font-light tracking-wider"
+              disabled={isSubmitting}
+              className="w-full bg-black text-white hover:bg-black/90 transition-colors duration-300 h-12 text-base font-light tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Send Message
+              {isSubmitting ? 'Sending...' : 'Send Message'}
             </Button>
           </form>
 

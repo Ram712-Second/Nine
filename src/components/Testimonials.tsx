@@ -16,7 +16,7 @@ const testimonials = [
   {
     name: 'Sarah Mitchell',
     project: 'Residential Villa',
-    rating: 5,
+    rating: 3,
     text: '9 Architects transformed our dream home into reality. Their attention to detail and innovative design approach exceeded all expectations.',
   },
   {
@@ -89,7 +89,7 @@ const Testimonials = () => {
                       {Array.from({ length: testimonial.rating }).map((_, i) => (
                         <Star
                           key={i}
-                          className="w-6 h-6 fill-white text-white"
+                          className="w-6 h-6 fill-yellow-500 text-yellow"
                         />
                       ))}
                     </div>
