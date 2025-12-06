@@ -65,7 +65,7 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validation
     if (!formData.name || !formData.email || !formData.message) {
       toast({
@@ -77,44 +77,42 @@ const Contact = () => {
     }
 
     setIsSubmitting(true);
-  
+
     try {
-      // Replace 'your@email.com' with your actual email address
-      const response = await fetch('https://formsubmit.co/ajax/dbc7290@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-          _subject: 'New Contact Form Submission from 9architects',
-        }),
+      // Create FormData object for Web3Forms
+      const formDataToSend = new FormData();
+      formDataToSend.append("access_key", "98949022-9203-45e7-aaf4-e9d69086533f");
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("phone", formData.phone);
+      formDataToSend.append("message", formData.message);
+      formDataToSend.append("subject", "New Contact Form Submission from 9architects");
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formDataToSend
       });
 
       const result = await response.json();
-      console.log('FormSubmit Response:', result);
-  
-      if (response.ok && result.success) {
+      console.log('Web3Forms Response:', result);
+
+      if (result.success) {
         toast({
           title: "Message Sent! ✓",
           description: "Thank you for contacting us. We will get back to you soon.",
         });
-  
+
         // Clear form
         setFormData({ name: "", email: "", phone: "", message: "" });
       } else {
         throw new Error(result.message || 'Submission failed');
       }
-  
+
     } catch (error) {
       console.error('Submission error:', error);
       toast({
         title: "Submission Failed!",
-        description: "Something went wrong. Please try again or email us directly.",
+        description: "Something went wrong. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -132,7 +130,7 @@ const Contact = () => {
         <h2 className="text-center mb-16 text-black">Contact Us</h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-6xl mx-auto">
-          <div onSubmit={handleSubmit} className="contact-form space-y-6">
+          <form onSubmit={handleSubmit} className="contact-form space-y-6">
             <Input
               type="text"
               name="name"
@@ -173,13 +171,13 @@ const Contact = () => {
             />
 
             <Button
-              onClick={handleSubmit}
+              type="submit"
               disabled={isSubmitting}
               className="w-full bg-black text-white hover:bg-black/90 transition-colors duration-300 h-12 text-base font-light tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Sending...' : 'Send Message'}
             </Button>
-          </div>
+          </form>
 
           <div className="contact-map h-[500px] w-full">
             <iframe
