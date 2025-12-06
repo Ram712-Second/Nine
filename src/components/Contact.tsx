@@ -65,37 +65,56 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validation
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        title: "Validation Error",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
   
     try {
-      const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbzCd7UwSq4TuPxQ7mgdDOGiOsS9txTCC1EFevZjalg3UmyOVEKw3Tr2dK-PJBfKL86J/exec",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            message: formData.message,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-  
-      toast({
-        title: "Message Sent!",
-        description: "Thank you for contacting us. We will get back to you soon.",
+      // Replace 'your@email.com' with your actual email address
+      const response = await fetch('https://formsubmit.co/ajax/dbc7290@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          _subject: 'New Contact Form Submission from 9architects',
+        }),
       });
+
+      const result = await response.json();
+      console.log('FormSubmit Response:', result);
   
-      setFormData({ name: "", email: "", phone: "", message: "" });
+      if (response.ok && result.success) {
+        toast({
+          title: "Message Sent! ✓",
+          description: "Thank you for contacting us. We will get back to you soon.",
+        });
+  
+        // Clear form
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
   
     } catch (error) {
-      console.error(error);
+      console.error('Submission error:', error);
       toast({
         title: "Submission Failed!",
-        description: "Something went wrong. Please try again.",
+        description: "Something went wrong. Please try again or email us directly.",
         variant: "destructive",
       });
     } finally {
@@ -113,7 +132,7 @@ const Contact = () => {
         <h2 className="text-center mb-16 text-black">Contact Us</h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-6xl mx-auto">
-          <form onSubmit={handleSubmit} className="contact-form space-y-6">
+          <div onSubmit={handleSubmit} className="contact-form space-y-6">
             <Input
               type="text"
               name="name"
@@ -140,7 +159,6 @@ const Contact = () => {
               placeholder="Enter Your Phone"
               value={formData.phone}
               onChange={handleChange}
-              required
               className="bg-white border-black/50 text-black placeholder:text-black/50"
             />
 
@@ -155,13 +173,13 @@ const Contact = () => {
             />
 
             <Button
-              type="submit"
+              onClick={handleSubmit}
               disabled={isSubmitting}
               className="w-full bg-black text-white hover:bg-black/90 transition-colors duration-300 h-12 text-base font-light tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Sending...' : 'Send Message'}
             </Button>
-          </form>
+          </div>
 
           <div className="contact-map h-[500px] w-full">
             <iframe
@@ -172,7 +190,6 @@ const Contact = () => {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              // className="grayscale"
             />
           </div>
         </div>
@@ -182,4 +199,3 @@ const Contact = () => {
 };
 
 export default Contact;
-
