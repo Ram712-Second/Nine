@@ -6,7 +6,11 @@ const Footer = () => {
       <div className="container mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-8">
           <div>
-            <h3 className="text-2xl font-light mb-4">9 Architects</h3>
+            {/* <h3 className="text-2xl font-light mb-4">9 Architects</h3> */}
+            <div className="flex items-baseline gap-0.5">
+              <span className="text-3xl font-bold text-[#0EA5E9]">9</span>
+              <span className="text-xl font-light">Architects</span>
+            </div>
             <p className="text-white/70 font-light leading-relaxed">
               Creating spaces that inspire and transform lives through
               innovative architectural design.

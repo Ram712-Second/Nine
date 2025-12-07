@@ -79,14 +79,13 @@ const Loader = ({ onComplete }: LoaderProps) => {
       ref={loaderRef}
       className="fixed inset-0 z-50 flex items-center justify-center bg-background"
     >
-      <svg
+<svg
         width="300"
         height="200"
         viewBox="0 0 300 200"
         className="w-60 md:w-80"
-        fill="currentColor"
       >
-        {/* Bold "9" */}
+        {/* Bold "9" in blue */}
         <text
           ref={nineTextRef}
           x="50%"
@@ -96,12 +95,23 @@ const Loader = ({ onComplete }: LoaderProps) => {
           fontSize="120"
           fontWeight="bold"
           fontFamily="sans-serif"
+          fill="#0EA5E9"
         >
           9
         </text>
-        {/* "Architects" text */}
-        <text ref={architectsTextRef} x="50%" y="85%" textAnchor="middle" fontSize="24" fontFamily="sans-serif" letterSpacing="0.2em">
-          ARCHITECTS
+        {/* "architects" text in lowercase and smaller */}
+        <text 
+          ref={architectsTextRef} 
+          x="50%" 
+          y="85%" 
+          textAnchor="middle" 
+          fontSize="20" 
+          fontWeight="medium"
+          fontFamily="sans-serif" 
+          letterSpacing="0.15em"
+          fill="currentColor"
+        >
+          Architects
         </text>
       </svg>
     </div>

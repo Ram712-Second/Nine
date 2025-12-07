@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Building2, Home, Trees, Ruler, Hammer } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -11,26 +10,31 @@ const services = [
     icon: Building2,
     title: 'Architectural Design',
     description: 'Innovative and functional architectural solutions tailored to your vision and requirements.',
+    color: 'from-slate-800 to-slate-900',
   },
   {
     icon: Home,
     title: 'Interior Design',
     description: 'Creating beautiful, cohesive interior spaces that reflect your style and enhance livability.',
+    color: 'from-blue-900 to-slate-800',
   },
   {
     icon: Trees,
     title: 'Landscape Planning',
     description: 'Harmonious outdoor environments that complement architectural design and natural surroundings.',
+    color: 'from-gray-800 to-slate-900',
   },
   {
     icon: Ruler,
     title: 'Structural Consulting',
-    description: 'Expert structural engineering to ensure safety, durability, and design integrity.',
+    description: 'Advanced structural engineering expertise ensuring durability, safety, and design precision.',
+    color: 'from-stone-800 to-gray-900',
   },
   {
     icon: Hammer,
     title: 'Project Execution',
     description: 'End-to-end project management ensuring quality delivery within timeline and budget.',
+    color: 'from-amber-900 to-slate-900',
   },
 ];
 
@@ -64,48 +68,49 @@ const Services = () => {
     <section
       id="services"
       ref={sectionRef}
-      className="section-padding bg-white"
+      className="relative bg-white py-24 px-4 md:px-8 lg:px-16"
     >
-      <div className="container mx-auto px-6 lg:px-12">
-        <h2 className="text-center mb-16 text-black">Our Services</h2>
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 text-5xl  text-black md:text-6xl">
+            Our Services
+          </h2>
+          <p className="text-lg text-black/60">
+            Comprehensive architectural solutions for your vision
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              // <Card
-              //   key={index}
-              //   className="service-card bg-white/5 border-white/10 hover:bg-white/10 transition-all duration-500"
-              // >
-              //   <CardHeader>
-              //     <Icon className="w-12 h-12 mb-4 text-black" strokeWidth={1} />
-              //     <CardTitle className="text-2xl font-light text-black">
-              //       {service.title}
-              //     </CardTitle>
-              //   </CardHeader>
-              //   <CardContent>
-              //     <p className="text-black/70 font-light leading-relaxed">
-              //       {service.description}
-              //     </p>
-              //   </CardContent>
-              // </Card>
-              <Card
+              <div
                 key={index}
-                className="service-card group relative overflow-hidden bg-gradient-to-br from-white to-gray-50 border border-black/20 hover:border-black/40 transition-all duration-300 rounded-md"
+                className="service-card group relative h-[400px] overflow-hidden rounded-2xl shadow-2xl"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-black/0 via-black/5 to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <CardHeader className="relative z-10">
-                  <Icon className="w-12 h-12 mb-4 text-black group-hover:scale-110 transition-transform duration-300" strokeWidth={1.5} />
-                  <CardTitle className="text-2xl font-light text-black">
-                    {service.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="relative z-10">
-                  <p className="text-black/70 font-light leading-relaxed">
-                    {service.description}
-                  </p>
-                </CardContent>
-              </Card>
+                {/* Background gradient */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.color}`}>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Icon className="text-white/5 w-64 h-64" strokeWidth={0.5} />
+                  </div>
+                </div>
+
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/20 transition-all duration-500 group-hover:bg-black/40" />
+
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
+                  <div className="text-white">
+                    <Icon className="w-12 h-12 mb-4 transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
+                    <h3 className="mb-3 text-2xl font-bold md:text-3xl">
+                      {service.title}
+                    </h3>
+                    <p className="text-lg text-white/90 md:text-lg leading-relaxed">
+                      {service.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
             );
           })}
         </div>
