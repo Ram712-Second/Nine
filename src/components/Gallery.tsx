@@ -61,7 +61,7 @@ const Gallery = () => {
               <iframe
                 width="100%"
                 height="100%"
-                src="https://www.youtube.com/embed/cF6qaUftxlA?autoplay=1&mute=1"
+                src="https://www.youtube.com/embed/0L5X0AqFVx8?autoplay=1&mute=1"
                 title="YouTube video player 1"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -73,7 +73,7 @@ const Gallery = () => {
               <iframe
                 width="100%"
                 height="100%"
-                src="https://www.youtube.com/embed/cF6qaUftxlA?autoplay=1&mute=1"
+                src="https://www.youtube.com/embed/7lFuZ76c8zw?autoplay=1&mute=1"
                 title="YouTube video player 2"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -68,6 +68,17 @@ const Footer = () => {
             >
               <Instagram className="w-5 h-5" />
             </a>
+
+            <a
+              href="https://www.youtube.com/@9Architects"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/60 hover:text-white transition-colors duration-300"
+            >
+              <Youtube className="w-5 h-5" />
+            </a>
+
+            
 
             {/* <a
               href="https://twitter.com/yourpage"
