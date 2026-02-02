@@ -11,6 +11,7 @@ import Services from '@/components/Services';
 import Projects from '@/components/Projects';
 import Process from '@/components/Process';
 import Testimonials from '@/components/Testimonials';
+import Team from '@/components/Team';
 import Contact from '@/components/Contact';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
@@ -44,6 +45,7 @@ const Index = () => {
           <Projects />
           <Process />
           <Testimonials />
+          <Team />
           <Contact />
           <WhatsAppButton />
         </Layout>
