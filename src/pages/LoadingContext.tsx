@@ -7,10 +7,14 @@ interface LoadingContextType {
 
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 
+// Check if loader has already been shown this session
+const hasLoadedBefore = () => sessionStorage.getItem('hasLoaded') === 'true';
+
 export const LoadingProvider = ({ children }: { children: ReactNode }) => {
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [isInitialLoad, setIsInitialLoad] = useState(() => !hasLoadedBefore());
 
   const finishInitialLoad = () => {
+    sessionStorage.setItem('hasLoaded', 'true');
     setIsInitialLoad(false);
   };
 
