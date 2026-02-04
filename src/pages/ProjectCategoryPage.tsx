@@ -1,8 +1,10 @@
+import { useState, useCallback, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Layout from '@/components/Layout';
 import Masonry from '@/components/Masonry';
 import NotFound from './NotFound';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface CategoryData {
   title: string;
@@ -17,18 +19,18 @@ const categoryData: Record<string, CategoryData> = {
     subtitle: 'Crafting Beautiful Spaces',
     description: 'Explore our collection of elegant interior designs that transform living spaces into works of art.',
     images: [
-      { id: 'int-1', img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&q=80', url: '#', height: 400, title: 'Modern Living Room', description: 'Minimalist design with warm tones' },
-      { id: 'int-2', img: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&q=80', url: '#', height: 500, title: 'Contemporary Kitchen', description: 'Sleek finishes and open layout' },
-      { id: 'int-3', img: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=600&q=80', url: '#', height: 350, title: 'Cozy Bedroom Suite', description: 'Tranquil retreat with natural materials' },
-      { id: 'int-4', img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80', url: '#', height: 450, title: 'Luxury Bathroom', description: 'Marble accents and ambient lighting' },
-      { id: 'int-5', img: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&q=80', url: '#', height: 380, title: 'Dining Area', description: 'Elegant entertaining space' },
-      { id: 'int-6', img: 'https://images.unsplash.com/photo-1616137466211-f939a420be84?w=600&q=80', url: '#', height: 520, title: 'Study Room', description: 'Productive and stylish workspace' },
-      { id: 'int-7', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80', url: '#', height: 420, title: 'Open Plan Living', description: 'Seamless flow between spaces' },
-      { id: 'int-8', img: 'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=600&q=80', url: '#', height: 360, title: 'Master Suite', description: 'Luxurious personal sanctuary' },
-      { id: 'int-9', img: 'https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=600&q=80', url: '#', height: 480, title: 'Lounge Area', description: 'Relaxed sophistication' },
-      { id: 'int-10', img: 'https://images.unsplash.com/photo-1615529328331-f8917597711f?w=600&q=80', url: '#', height: 400, title: 'Walk-in Closet', description: 'Organized luxury storage' },
-      { id: 'int-11', img: 'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=600&q=80', url: '#', height: 440, title: 'Hallway Design', description: 'Grand entrance statement' },
-      { id: 'int-12', img: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=600&q=80', url: '#', height: 390, title: 'Kids Room', description: 'Playful yet refined design' },
+      { id: 'int-1', img: 'https://picsum.photos/seed/int1/600/400', url: '#', height: 400, title: 'Modern Living Room', description: 'Minimalist design with warm tones' },
+      { id: 'int-2', img: 'https://picsum.photos/seed/int2/600/400', url: '#', height: 400, title: 'Contemporary Kitchen', description: 'Sleek finishes and open layout' },
+      { id: 'int-3', img: 'https://picsum.photos/seed/int3/600/400', url: '#', height: 400, title: 'Cozy Bedroom Suite', description: 'Tranquil retreat with natural materials' },
+      { id: 'int-4', img: 'https://picsum.photos/seed/int4/600/400', url: '#', height: 400, title: 'Luxury Bathroom', description: 'Marble accents and ambient lighting' },
+      { id: 'int-5', img: 'https://picsum.photos/seed/int5/600/400', url: '#', height: 400, title: 'Dining Area', description: 'Elegant entertaining space' },
+      { id: 'int-6', img: 'https://picsum.photos/seed/int6/600/400', url: '#', height: 400, title: 'Study Room', description: 'Productive and stylish workspace' },
+      { id: 'int-7', img: 'https://picsum.photos/seed/int7/600/400', url: '#', height: 400, title: 'Open Plan Living', description: 'Seamless flow between spaces' },
+      { id: 'int-8', img: 'https://picsum.photos/seed/int8/600/400', url: '#', height: 400, title: 'Master Suite', description: 'Luxurious personal sanctuary' },
+      { id: 'int-9', img: 'https://picsum.photos/seed/int9/600/400', url: '#', height: 400, title: 'Lounge Area', description: 'Relaxed sophistication' },
+      { id: 'int-10', img: 'https://picsum.photos/seed/int10/600/400', url: '#', height: 400, title: 'Walk-in Closet', description: 'Organized luxury storage' },
+      { id: 'int-11', img: 'https://picsum.photos/seed/int11/600/400', url: '#', height: 400, title: 'Hallway Design', description: 'Grand entrance statement' },
+      { id: 'int-12', img: 'https://picsum.photos/seed/int12/600/400', url: '#', height: 400, title: 'Kids Room', description: 'Playful yet refined design' },
     ],
   },
   residential: {
@@ -36,18 +38,18 @@ const categoryData: Record<string, CategoryData> = {
     subtitle: 'Luxury Living Redefined',
     description: 'Discover our residential projects featuring bespoke homes designed for comfort and elegance.',
     images: [
-      { id: 'res-1', img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80', url: '#', height: 450, title: 'Modern Villa', description: 'Contemporary luxury living' },
-      { id: 'res-2', img: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&q=80', url: '#', height: 380, title: 'Hillside Residence', description: 'Panoramic views and privacy' },
-      { id: 'res-3', img: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80', url: '#', height: 500, title: 'Beachfront Home', description: 'Coastal living at its finest' },
-      { id: 'res-4', img: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&q=80', url: '#', height: 420, title: 'Urban Townhouse', description: 'City sophistication meets comfort' },
-      { id: 'res-5', img: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600&q=80', url: '#', height: 360, title: 'Garden Estate', description: 'Nature-integrated living' },
-      { id: 'res-6', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80', url: '#', height: 480, title: 'Penthouse Suite', description: 'Sky-high luxury apartment' },
-      { id: 'res-7', img: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=600&q=80', url: '#', height: 400, title: 'Lake House', description: 'Serene waterfront retreat' },
-      { id: 'res-8', img: 'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=600&q=80', url: '#', height: 520, title: 'Country Manor', description: 'Classic elegance in the countryside' },
-      { id: 'res-9', img: 'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?w=600&q=80', url: '#', height: 370, title: 'Minimalist Home', description: 'Less is more philosophy' },
-      { id: 'res-10', img: 'https://images.unsplash.com/photo-1600074169098-16a54d791d0d?w=600&q=80', url: '#', height: 440, title: 'Smart Home', description: 'Technology meets design' },
-      { id: 'res-11', img: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&q=80', url: '#', height: 410, title: 'Family Residence', description: 'Spacious living for families' },
-      { id: 'res-12', img: 'https://images.unsplash.com/photo-1600585153490-76fb20a32601?w=600&q=80', url: '#', height: 390, title: 'Eco House', description: 'Sustainable luxury living' },
+      { id: 'res-1', img: 'https://picsum.photos/seed/res1/600/400', url: '#', height: 400, title: 'Modern Villa', description: 'Contemporary luxury living' },
+      { id: 'res-2', img: 'https://picsum.photos/seed/res2/600/400', url: '#', height: 400, title: 'Hillside Residence', description: 'Panoramic views and privacy' },
+      { id: 'res-3', img: 'https://picsum.photos/seed/res3/600/400', url: '#', height: 400, title: 'Beachfront Home', description: 'Coastal living at its finest' },
+      { id: 'res-4', img: 'https://picsum.photos/seed/res4/600/400', url: '#', height: 400, title: 'Urban Townhouse', description: 'City sophistication meets comfort' },
+      { id: 'res-5', img: 'https://picsum.photos/seed/res5/600/400', url: '#', height: 400, title: 'Garden Estate', description: 'Nature-integrated living' },
+      { id: 'res-6', img: 'https://picsum.photos/seed/res6/600/400', url: '#', height: 400, title: 'Penthouse Suite', description: 'Sky-high luxury apartment' },
+      { id: 'res-7', img: 'https://picsum.photos/seed/res7/600/400', url: '#', height: 400, title: 'Lake House', description: 'Serene waterfront retreat' },
+      { id: 'res-8', img: 'https://picsum.photos/seed/res8/600/400', url: '#', height: 400, title: 'Country Manor', description: 'Classic elegance in the countryside' },
+      { id: 'res-9', img: 'https://picsum.photos/seed/res9/600/400', url: '#', height: 400, title: 'Minimalist Home', description: 'Less is more philosophy' },
+      { id: 'res-10', img: 'https://picsum.photos/seed/res10/600/400', url: '#', height: 400, title: 'Smart Home', description: 'Technology meets design' },
+      { id: 'res-11', img: 'https://picsum.photos/seed/res11/600/400', url: '#', height: 400, title: 'Family Residence', description: 'Spacious living for families' },
+      { id: 'res-12', img: 'https://picsum.photos/seed/res12/600/400', url: '#', height: 400, title: 'Eco House', description: 'Sustainable luxury living' },
     ],
   },
   commercial: {
@@ -55,18 +57,18 @@ const categoryData: Record<string, CategoryData> = {
     subtitle: 'Inspiring Workspaces',
     description: 'Browse our commercial projects from modern offices to retail spaces and hospitality venues.',
     images: [
-      { id: 'com-1', img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80', url: '#', height: 420, title: 'Tech Office', description: 'Modern open-plan workspace' },
-      { id: 'com-2', img: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=600&q=80', url: '#', height: 380, title: 'Co-working Space', description: 'Collaborative work environment' },
-      { id: 'com-3', img: 'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=600&q=80', url: '#', height: 500, title: 'Boutique Hotel', description: 'Luxury hospitality design' },
-      { id: 'com-4', img: 'https://images.unsplash.com/photo-1462826303086-329426d1aef5?w=600&q=80', url: '#', height: 450, title: 'Conference Center', description: 'State-of-the-art meeting spaces' },
-      { id: 'com-5', img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', url: '#', height: 360, title: 'Restaurant Design', description: 'Immersive dining experience' },
-      { id: 'com-6', img: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80', url: '#', height: 480, title: 'Retail Store', description: 'Brand-forward shopping space' },
-      { id: 'com-7', img: 'https://images.unsplash.com/photo-1600508774634-4e11d34730e2?w=600&q=80', url: '#', height: 400, title: 'Corporate Lobby', description: 'Impressive first impressions' },
-      { id: 'com-8', img: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80', url: '#', height: 520, title: 'Innovation Hub', description: 'Creative technology space' },
-      { id: 'com-9', img: 'https://images.unsplash.com/photo-1564069114553-7215e1ff1890?w=600&q=80', url: '#', height: 370, title: 'Cafe Interior', description: 'Warm and inviting atmosphere' },
-      { id: 'com-10', img: 'https://images.unsplash.com/photo-1577412647305-991150c7d163?w=600&q=80', url: '#', height: 440, title: 'Showroom', description: 'Product display excellence' },
-      { id: 'com-11', img: 'https://images.unsplash.com/photo-1600494603473-d2ad00adbe6d?w=600&q=80', url: '#', height: 410, title: 'Spa & Wellness', description: 'Tranquil commercial retreat' },
-      { id: 'com-12', img: 'https://images.unsplash.com/photo-1497215842964-222b430dc094?w=600&q=80', url: '#', height: 390, title: 'Startup Office', description: 'Agile workspace design' },
+      { id: 'com-1', img: 'https://picsum.photos/seed/com1/600/400', url: '#', height: 400, title: 'Tech Office', description: 'Modern open-plan workspace' },
+      { id: 'com-2', img: 'https://picsum.photos/seed/com2/600/400', url: '#', height: 400, title: 'Co-working Space', description: 'Collaborative work environment' },
+      { id: 'com-3', img: 'https://picsum.photos/seed/com3/600/400', url: '#', height: 400, title: 'Boutique Hotel', description: 'Luxury hospitality design' },
+      { id: 'com-4', img: 'https://picsum.photos/seed/com4/600/400', url: '#', height: 400, title: 'Conference Center', description: 'State-of-the-art meeting spaces' },
+      { id: 'com-5', img: 'https://picsum.photos/seed/com5/600/400', url: '#', height: 400, title: 'Restaurant Design', description: 'Immersive dining experience' },
+      { id: 'com-6', img: 'https://picsum.photos/seed/com6/600/400', url: '#', height: 400, title: 'Retail Store', description: 'Brand-forward shopping space' },
+      { id: 'com-7', img: 'https://picsum.photos/seed/com7/600/400', url: '#', height: 400, title: 'Corporate Lobby', description: 'Impressive first impressions' },
+      { id: 'com-8', img: 'https://picsum.photos/seed/com8/600/400', url: '#', height: 400, title: 'Innovation Hub', description: 'Creative technology space' },
+      { id: 'com-9', img: 'https://picsum.photos/seed/com9/600/400', url: '#', height: 400, title: 'Cafe Interior', description: 'Warm and inviting atmosphere' },
+      { id: 'com-10', img: 'https://picsum.photos/seed/com10/600/400', url: '#', height: 400, title: 'Showroom', description: 'Product display excellence' },
+      { id: 'com-11', img: 'https://picsum.photos/seed/com11/600/400', url: '#', height: 400, title: 'Spa & Wellness', description: 'Tranquil commercial retreat' },
+      { id: 'com-12', img: 'https://picsum.photos/seed/com12/600/400', url: '#', height: 400, title: 'Startup Office', description: 'Agile workspace design' },
     ],
   },
   renovation: {
@@ -74,18 +76,18 @@ const categoryData: Record<string, CategoryData> = {
     subtitle: 'Transforming Possibilities',
     description: 'See how we breathe new life into existing structures with thoughtful and creative redesigns.',
     images: [
-      { id: 'ren-1', img: 'https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=600&q=80', url: '#', height: 450, title: 'Loft Conversion', description: 'Industrial charm meets modern comfort' },
-      { id: 'ren-2', img: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=600&q=80', url: '#', height: 380, title: 'Kitchen Remodel', description: 'Complete culinary transformation' },
-      { id: 'ren-3', img: 'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=600&q=80', url: '#', height: 500, title: 'Bathroom Renovation', description: 'Spa-like personal retreat' },
-      { id: 'ren-4', img: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=600&q=80', url: '#', height: 420, title: 'Heritage Restoration', description: 'Preserving history with modern touch' },
-      { id: 'ren-5', img: 'https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=600&q=80', url: '#', height: 360, title: 'Basement Conversion', description: 'Underground living space' },
-      { id: 'ren-6', img: 'https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=600&q=80', url: '#', height: 480, title: 'Facade Makeover', description: 'Stunning exterior transformation' },
-      { id: 'ren-7', img: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=600&q=80', url: '#', height: 400, title: 'Open Plan Conversion', description: 'Breaking walls, creating flow' },
-      { id: 'ren-8', img: 'https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=600&q=80', url: '#', height: 520, title: 'Roof Extension', description: 'Expanding upward with style' },
-      { id: 'ren-9', img: 'https://images.unsplash.com/photo-1600047508788-786f3865b4b9?w=600&q=80', url: '#', height: 370, title: 'Garden Room Addition', description: 'Blending indoor and outdoor' },
-      { id: 'ren-10', img: 'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=600&q=80', url: '#', height: 440, title: 'Period Property Update', description: 'Classic meets contemporary' },
-      { id: 'ren-11', img: 'https://images.unsplash.com/photo-1600566752229-250ed79470f8?w=600&q=80', url: '#', height: 410, title: 'Garage Conversion', description: 'New purpose, new design' },
-      { id: 'ren-12', img: 'https://images.unsplash.com/photo-1600585152915-d208bec867a1?w=600&q=80', url: '#', height: 390, title: 'Complete Overhaul', description: 'Full property transformation' },
+      { id: 'ren-1', img: 'https://picsum.photos/seed/ren1/600/400', url: '#', height: 400, title: 'Loft Conversion', description: 'Industrial charm meets modern comfort' },
+      { id: 'ren-2', img: 'https://picsum.photos/seed/ren2/600/400', url: '#', height: 400, title: 'Kitchen Remodel', description: 'Complete culinary transformation' },
+      { id: 'ren-3', img: 'https://picsum.photos/seed/ren3/600/400', url: '#', height: 400, title: 'Bathroom Renovation', description: 'Spa-like personal retreat' },
+      { id: 'ren-4', img: 'https://picsum.photos/seed/ren4/600/400', url: '#', height: 400, title: 'Heritage Restoration', description: 'Preserving history with modern touch' },
+      { id: 'ren-5', img: 'https://picsum.photos/seed/ren5/600/400', url: '#', height: 400, title: 'Basement Conversion', description: 'Underground living space' },
+      { id: 'ren-6', img: 'https://picsum.photos/seed/ren6/600/400', url: '#', height: 400, title: 'Facade Makeover', description: 'Stunning exterior transformation' },
+      { id: 'ren-7', img: 'https://picsum.photos/seed/ren7/600/400', url: '#', height: 400, title: 'Open Plan Conversion', description: 'Breaking walls, creating flow' },
+      { id: 'ren-8', img: 'https://picsum.photos/seed/ren8/600/400', url: '#', height: 400, title: 'Roof Extension', description: 'Expanding upward with style' },
+      { id: 'ren-9', img: 'https://picsum.photos/seed/ren9/600/400', url: '#', height: 400, title: 'Garden Room Addition', description: 'Blending indoor and outdoor' },
+      { id: 'ren-10', img: 'https://picsum.photos/seed/ren10/600/400', url: '#', height: 400, title: 'Period Property Update', description: 'Classic meets contemporary' },
+      { id: 'ren-11', img: 'https://picsum.photos/seed/ren11/600/400', url: '#', height: 400, title: 'Garage Conversion', description: 'New purpose, new design' },
+      { id: 'ren-12', img: 'https://picsum.photos/seed/ren12/600/400', url: '#', height: 400, title: 'Complete Overhaul', description: 'Full property transformation' },
     ],
   },
 };
@@ -95,9 +97,74 @@ const ProjectCategoryPage = () => {
   const navigate = useNavigate();
   const category = slug ? categoryData[slug] : undefined;
 
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const openLightbox = useCallback((index: number) => {
+    setCurrentIndex(index);
+    setLightboxOpen(true);
+    setImageLoaded(false);
+    document.body.style.overflow = 'hidden';
+  }, []);
+
+  const closeLightbox = useCallback(() => {
+    setLightboxOpen(false);
+    document.body.style.overflow = 'unset';
+  }, []);
+
+  const goToPrevious = useCallback(() => {
+    if (!category) return;
+    setImageLoaded(false);
+    setCurrentIndex((prev) => (prev === 0 ? category.images.length - 1 : prev - 1));
+  }, [category]);
+
+  const goToNext = useCallback(() => {
+    if (!category) return;
+    setImageLoaded(false);
+    setCurrentIndex((prev) => (prev === category.images.length - 1 ? 0 : prev + 1));
+  }, [category]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') goToPrevious();
+      if (e.key === 'ArrowRight') goToNext();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxOpen, closeLightbox, goToPrevious, goToNext]);
+
+  // Touch/swipe handling
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    if (isLeftSwipe) goToNext();
+    if (isRightSwipe) goToPrevious();
+  };
+
   if (!category) {
     return <NotFound />;
   }
+
+  const currentImage = category.images[currentIndex];
 
   return (
     <Layout theme="light">
@@ -143,12 +210,85 @@ const ProjectCategoryPage = () => {
             items={category.images}
             animateFrom="bottom"
             stagger={0.04}
-            scaleOnHover={true}
-            hoverScale={1.05}
             blurToFocus={true}
+            onImageClick={openLightbox}
           />
         </div>
       </section>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {lightboxOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95"
+            onClick={closeLightbox}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            {/* Close button */}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 z-50 p-2 text-white/70 hover:text-white transition-colors"
+            >
+              <X size={32} />
+            </button>
+
+            {/* Previous button */}
+            <button
+              onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
+              className="absolute left-4 z-50 p-2 text-white/70 hover:text-white transition-colors"
+            >
+              <ChevronLeft size={40} />
+            </button>
+
+            {/* Next button */}
+            <button
+              onClick={(e) => { e.stopPropagation(); goToNext(); }}
+              className="absolute right-4 z-50 p-2 text-white/70 hover:text-white transition-colors"
+            >
+              <ChevronRight size={40} />
+            </button>
+
+            {/* Image */}
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.2 }}
+              className="relative max-w-[90vw] max-h-[85vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Loading spinner */}
+              {!imageLoaded && (
+                <div className="flex items-center justify-center w-[80vw] h-[60vh] md:w-[60vw] md:h-[70vh]">
+                  <div className="w-10 h-10 border-4 border-white/20 border-t-white rounded-full animate-spin" />
+                </div>
+              )}
+
+              <img
+                src={currentImage.img.replace('/600/400', '/1200/800')}
+                alt={currentImage.title}
+                className={`max-w-full max-h-[85vh] object-contain rounded-lg transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0 absolute'}`}
+                onLoad={() => setImageLoaded(true)}
+              />
+
+              {/* Image info - only show when image is loaded */}
+              {imageLoaded && (
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent rounded-b-lg">
+                  <h3 className="text-white text-xl font-semibold">{currentImage.title}</h3>
+                  <p className="text-white/70 text-sm">{currentImage.description}</p>
+                  <p className="text-white/50 text-xs mt-2">{currentIndex + 1} / {category.images.length}</p>
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Layout>
   );
 };

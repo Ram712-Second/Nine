@@ -76,6 +76,7 @@ interface MasonryProps {
   hoverScale?: number;
   blurToFocus?: boolean;
   colorShiftOnHover?: boolean;
+  onImageClick?: (index: number) => void;
 }
 
 const Masonry: React.FC<MasonryProps> = ({
@@ -84,12 +85,10 @@ const Masonry: React.FC<MasonryProps> = ({
   duration = 0.6,
   stagger = 0.05,
   animateFrom = 'bottom',
-  scaleOnHover = true,
-  hoverScale = 1.05,
   blurToFocus = true,
-  colorShiftOnHover = false
+  colorShiftOnHover = false,
+  onImageClick
 }) => {
-  const [hoveredItem, setHoveredItem] = useState<GridItem | null>(null);
 
   const columns = useMedia(
     ['(min-width:1500px)', '(min-width:1000px)', '(min-width:600px)', '(min-width:400px)'],
@@ -220,9 +219,7 @@ const Masonry: React.FC<MasonryProps> = ({
     hasMounted.current = true;
   }, [grid, imagesReady, stagger, animateFrom, blurToFocus, duration, ease, width]);
 
-  const handleMouseEnter = (id: string, element: HTMLElement, item: GridItem) => {
-    setHoveredItem(item);
-    
+  const handleMouseEnter = (id: string, element: HTMLElement) => {
     const scale = window.innerWidth < 768 ? 1.08 : 1.15;
     
     gsap.to(`[data-key="${id}"]`, {
@@ -243,8 +240,6 @@ const Masonry: React.FC<MasonryProps> = ({
   };
 
   const handleMouseLeave = (id: string, element: HTMLElement) => {
-    setHoveredItem(null);
-    
     gsap.to(`[data-key="${id}"]`, {
       scale: 1,
       zIndex: 1,
@@ -264,16 +259,23 @@ const Masonry: React.FC<MasonryProps> = ({
 
   return (
     <div ref={containerRef} className="relative w-full" style={{ height: containerHeight }}>
-      {grid.map(item => {
+      {grid.map((item, index) => {
         const randomDesc = getRandomDescription(item.id);
         return (
           <div
             key={item.id}
             data-key={item.id}
-            className="absolute box-content"
+            className={`absolute box-content ${onImageClick ? 'cursor-pointer' : ''}`}
             style={{ willChange: 'transform, width, height, opacity' }}
-            onMouseEnter={e => handleMouseEnter(item.id, e.currentTarget, item)}
+            onMouseEnter={e => handleMouseEnter(item.id, e.currentTarget)}
             onMouseLeave={e => handleMouseLeave(item.id, e.currentTarget)}
+            onClick={(e) => {
+              if (onImageClick) {
+                // Reset scale before opening lightbox
+                gsap.set(`[data-key="${item.id}"]`, { scale: 1, zIndex: 1 });
+                onImageClick(index);
+              }
+            }}
           >
             <div
               className="relative w-full h-full bg-cover bg-center rounded-[10px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] overflow-hidden"
