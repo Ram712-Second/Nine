@@ -10,6 +10,7 @@ const projects = [
     description: "Elegant and functional interior spaces that blend aesthetics with comfort",
     color: "from-amber-900 to-stone-900",
     slug: "interior",
+    image: "/projects/interior/int-3.jpg",
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ const projects = [
     description: "Bespoke homes and apartments designed for modern living",
     color: "from-slate-800 to-slate-900",
     slug: "residential",
+    image: "/projects/residential/res-1.jpg",
   },
   {
     id: 3,
@@ -26,6 +28,7 @@ const projects = [
     description: "Office spaces, retail environments, and hospitality venues that inspire",
     color: "from-blue-900 to-slate-800",
     slug: "commercial",
+    image: "/projects/commercial/com-11.jpg",
   },
   {
     id: 4,
@@ -34,6 +37,7 @@ const projects = [
     description: "Breathing new life into existing structures with thoughtful redesign",
     color: "from-stone-800 to-gray-900",
     slug: "renovation",
+    image: "/projects/renovation/ren-6.jpg",
   },
 ];
 
@@ -56,12 +60,15 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
       className="sticky top-20 mb-20 h-[70vh] w-full"
     >
       <div className="group relative h-full w-full overflow-hidden rounded-2xl shadow-2xl">
-        {/* Background gradient */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${project.color}`}>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-9xl font-bold text-white/5">{project.id}</div>
-          </div>
-        </div>
+        {/* Background image */}
+        <img
+          src={project.image}
+          alt={project.title}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+
+        {/* Gradient overlay */}
+        <div className={`absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent`} />
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/20 transition-all duration-500 group-hover:bg-black/40" />
