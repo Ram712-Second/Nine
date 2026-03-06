@@ -289,9 +289,9 @@ const Masonry: React.FC<MasonryProps> = ({
                 <h3 className="font-bold text-sm md:text-lg text-white mb-0.5 md:mb-1 line-clamp-1">
                   {item.title || randomDesc.title}
                 </h3>
-                <p className="text-xs md:text-sm text-gray-200 line-clamp-2">
+                {/* <p className="text-xs md:text-sm text-gray-200 line-clamp-2">
                   {item.description || randomDesc.description}
-                </p>
+                </p> */}
               </div>
             </div>
           </div>

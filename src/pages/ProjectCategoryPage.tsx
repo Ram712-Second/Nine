@@ -57,18 +57,18 @@ const categoryData: Record<string, CategoryData> = {
     subtitle: 'Inspiring Workspaces',
     description: 'Browse our commercial projects from modern offices to retail spaces and hospitality venues.',
     images: [
-      { id: 'com-1', img: '/projects/commercial/com-1.jpg', url: '#', height: 400, title: 'Tech Office', description: 'Modern open-plan workspace' },
-      { id: 'com-2', img: '/projects/commercial/com-2.jpg', url: '#', height: 400, title: 'Co-working Space', description: 'Collaborative work environment' },
-      { id: 'com-3', img: '/projects/commercial/com-3.jpg', url: '#', height: 400, title: 'Boutique Hotel', description: 'Luxury hospitality design' },
-      { id: 'com-4', img: '/projects/commercial/com-4.jpg', url: '#', height: 400, title: 'Conference Center', description: 'State-of-the-art meeting spaces' },
-      { id: 'com-5', img: '/projects/commercial/com-5.jpg', url: '#', height: 400, title: 'Restaurant Design', description: 'Immersive dining experience' },
-      { id: 'com-6', img: '/projects/commercial/com-6.jpg', url: '#', height: 400, title: 'Retail Store', description: 'Brand-forward shopping space' },
-      { id: 'com-7', img: '/projects/commercial/com-7.jpg', url: '#', height: 400, title: 'Corporate Lobby', description: 'Impressive first impressions' },
-      { id: 'com-8', img: '/projects/commercial/com-8.jpg', url: '#', height: 400, title: 'Innovation Hub', description: 'Creative technology space' },
-      { id: 'com-9', img: '/projects/commercial/com-9.jpg', url: '#', height: 400, title: 'Cafe Interior', description: 'Warm and inviting atmosphere' },
-      { id: 'com-10', img: '/projects/commercial/com-10.jpg', url: '#', height: 400, title: 'Showroom', description: 'Product display excellence' },
-      { id: 'com-11', img: '/projects/commercial/com-11.jpg', url: '#', height: 400, title: 'Spa & Wellness', description: 'Tranquil commercial retreat' },
-      { id: 'com-12', img: '/projects/commercial/com-12.jpg', url: '#', height: 400, title: 'Startup Office', description: 'Agile workspace design' },
+      { id: 'com-1', img: '/projects/commercial/com-1.jpg', url: '#', height: 400, title: 'AL BAYT KOOTTIKAL', description: 'Modern open-plan workspace' },
+      { id: 'com-2', img: '/projects/commercial/com-2.jpg', url: '#', height: 400, title: 'ANAS UNIVERSAL', description: 'Collaborative work environment' },
+      { id: 'com-3', img: '/projects/commercial/com-3.jpg', url: '#', height: 400, title: 'COSMO', description: 'Luxury hospitality design' },
+      { id: 'com-4', img: '/projects/commercial/com-4.jpg', url: '#', height: 400, title: 'DEV RESIDENCY', description: 'State-of-the-art meeting spaces' },
+      { id: 'com-5', img: '/projects/commercial/com-5.jpg', url: '#', height: 400, title: 'HYUNDAI SHOWROOM', description: 'Immersive dining experience' },
+      { id: 'com-6', img: '/projects/commercial/com-6.jpg', url: '#', height: 400, title: 'KC BRIGHT', description: 'Brand-forward shopping space' },
+      { id: 'com-7', img: '/projects/commercial/com-7.jpg', url: '#', height: 400, title: 'KC CENTER', description: 'Impressive first impressions' },
+      { id: 'com-8', img: '/projects/commercial/com-8.jpg', url: '#', height: 400, title: 'KC SHELL TRIVANDRUM', description: 'Creative technology space' },
+      // { id: 'com-9', img: '/projects/commercial/com-9.jpg', url: '#', height: 400, title: 'Cafe Interior', description: 'Warm and inviting atmosphere' },
+      // { id: 'com-10', img: '/projects/commercial/com-10.jpg', url: '#', height: 400, title: 'Showroom', description: 'Product display excellence' },
+      // { id: 'com-11', img: '/projects/commercial/com-11.jpg', url: '#', height: 400, title: 'Spa & Wellness', description: 'Tranquil commercial retreat' },
+      // { id: 'com-12', img: '/projects/commercial/com-12.jpg', url: '#', height: 400, title: 'Startup Office', description: 'Agile workspace design' },
     ],
   },
   renovation: {
@@ -200,9 +200,9 @@ const ProjectCategoryPage = () => {
             <h1 className="mb-4 text-5xl font-bold text-foreground md:text-6xl">
               {category.title}
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+            {/* <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
               {category.description}
-            </p>
+            </p> */}
           </motion.div>
 
           {/* Masonry Gallery */}
@@ -281,7 +281,7 @@ const ProjectCategoryPage = () => {
               {imageLoaded && (
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent rounded-b-lg">
                   <h3 className="text-white text-xl font-semibold">{currentImage.title}</h3>
-                  <p className="text-white/70 text-sm">{currentImage.description}</p>
+                  {/* <p className="text-white/70 text-sm">{currentImage.description}</p> */}
                   <p className="text-white/50 text-xs mt-2">{currentIndex + 1} / {category.images.length}</p>
                 </div>
               )}
