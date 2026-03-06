@@ -37,19 +37,6 @@ const useMeasure = <T extends HTMLElement>() => {
   return [ref, size] as const;
 };
 
-const preloadImages = async (urls: string[]): Promise<void> => {
-  await Promise.all(
-    urls.map(
-      src =>
-        new Promise<void>(resolve => {
-          const img = new Image();
-          img.src = src;
-          img.onload = img.onerror = () => resolve();
-        })
-    )
-  );
-};
-
 interface Item {
   id: string;
   img: string;
@@ -97,7 +84,7 @@ const Masonry: React.FC<MasonryProps> = ({
   );
 
   const [containerRef, { width }] = useMeasure<HTMLDivElement>();
-  const [imagesReady, setImagesReady] = useState(false);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
 
   const getRandomDescription = (id: string) => {
     const descriptions = [
@@ -151,8 +138,19 @@ const Masonry: React.FC<MasonryProps> = ({
     }
   };
 
+  // Load images progressively - each image loads independently
   useEffect(() => {
-    preloadImages(items.map(i => i.img)).then(() => setImagesReady(true));
+    items.forEach(item => {
+      const img = new Image();
+      img.src = item.img;
+      img.onload = () => {
+        setLoadedImages(prev => new Set(prev).add(item.id));
+      };
+      // Handle error case too - still show placeholder
+      img.onerror = () => {
+        setLoadedImages(prev => new Set(prev).add(item.id));
+      };
+    });
   }, [items]);
 
   const { grid, containerHeight } = useMemo(() => {
@@ -178,7 +176,7 @@ const Masonry: React.FC<MasonryProps> = ({
   const hasMounted = useRef(false);
 
   useLayoutEffect(() => {
-    if (!imagesReady || !width) return;
+    if (!width) return;
 
     grid.forEach((item, index) => {
       const selector = `[data-key="${item.id}"]`;
@@ -203,7 +201,7 @@ const Masonry: React.FC<MasonryProps> = ({
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top 85%',
-            once: true, 
+            once: true,
           }
         });
       } else {
@@ -217,7 +215,7 @@ const Masonry: React.FC<MasonryProps> = ({
     });
 
     hasMounted.current = true;
-  }, [grid, imagesReady, stagger, animateFrom, blurToFocus, duration, ease, width]);
+  }, [grid, stagger, animateFrom, blurToFocus, duration, ease, width]);
 
   const handleMouseEnter = (id: string, element: HTMLElement) => {
     const scale = window.innerWidth < 768 ? 1.08 : 1.15;
@@ -261,15 +259,16 @@ const Masonry: React.FC<MasonryProps> = ({
     <div ref={containerRef} className="relative w-full" style={{ height: containerHeight }}>
       {grid.map((item, index) => {
         const randomDesc = getRandomDescription(item.id);
+        const isLoaded = loadedImages.has(item.id);
         return (
           <div
             key={item.id}
             data-key={item.id}
             className={`absolute box-content ${onImageClick ? 'cursor-pointer' : ''}`}
             style={{ willChange: 'transform, width, height, opacity' }}
-            onMouseEnter={e => handleMouseEnter(item.id, e.currentTarget)}
-            onMouseLeave={e => handleMouseLeave(item.id, e.currentTarget)}
-            onClick={(e) => {
+            onMouseEnter={() => handleMouseEnter(item.id, containerRef.current as HTMLElement)}
+            onMouseLeave={() => handleMouseLeave(item.id, containerRef.current as HTMLElement)}
+            onClick={() => {
               if (onImageClick) {
                 // Reset scale before opening lightbox
                 gsap.set(`[data-key="${item.id}"]`, { scale: 1, zIndex: 1 });
@@ -277,21 +276,41 @@ const Masonry: React.FC<MasonryProps> = ({
               }
             }}
           >
-            <div
-              className="relative w-full h-full bg-cover bg-center rounded-[10px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] overflow-hidden"
-              style={{ backgroundImage: `url(${item.img})` }}
-            >
-              {colorShiftOnHover && (
-                <div className="color-overlay absolute inset-0 rounded-[10px] bg-gradient-to-tr from-pink-500/50 to-sky-500/50 opacity-0 pointer-events-none" />
+            <div className="relative w-full h-full rounded-[10px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] overflow-hidden">
+              {/* Skeleton loader - shown while image is loading */}
+              {!isLoaded && (
+                <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800 rounded-[10px] overflow-hidden">
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300/50 to-transparent animate-shimmer" />
+                  {/* Pulse animation */}
+                  <div className="absolute inset-0 animate-pulse bg-gray-300/20" />
+                  {/* Loading indicator */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-8 h-8 border-2 border-gray-400/30 border-t-gray-500 rounded-full animate-spin" />
+                      <span className="text-xs text-gray-500 dark:text-gray-400">Loading...</span>
+                    </div>
+                  </div>
+                </div>
               )}
-              
-              <div className="text-overlay absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-black/90 via-black/70 to-transparent opacity-0 pointer-events-none">
-                <h3 className="font-bold text-sm md:text-lg text-white mb-0.5 md:mb-1 line-clamp-1">
-                  {item.title || randomDesc.title}
-                </h3>
-                {/* <p className="text-xs md:text-sm text-gray-200 line-clamp-2">
-                  {item.description || randomDesc.description}
-                </p> */}
+
+              {/* Actual image - shown when loaded */}
+              <div
+                className={`relative w-full h-full bg-cover bg-center rounded-[10px] transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+                style={{ backgroundImage: `url(${item.img})` }}
+              >
+                {colorShiftOnHover && (
+                  <div className="color-overlay absolute inset-0 rounded-[10px] bg-gradient-to-tr from-pink-500/50 to-sky-500/50 opacity-0 pointer-events-none" />
+                )}
+
+                <div className="text-overlay absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-black/90 via-black/70 to-transparent opacity-0 pointer-events-none">
+                  <h3 className="font-bold text-sm md:text-lg text-white mb-0.5 line-clamp-1">
+                    {item.title || randomDesc.title}
+                  </h3>
+                  {/* <p className="text-xs md:text-sm text-gray-200 line-clamp-2">
+                    {item.description || randomDesc.description}
+                  </p> */}
+                </div>
               </div>
             </div>
           </div>
