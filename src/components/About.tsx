@@ -71,7 +71,7 @@ const About = () => {
             <img
               src={aboutImage}
               alt="9 Architects Studio"
-              className="w-full h-[600px] object-cover"
+              className="w-full h-[600px] object-cover grayscale"
             />
           </div>
 

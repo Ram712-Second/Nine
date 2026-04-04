@@ -10,7 +10,7 @@ const projects = [
     description: "Elegant and functional interior spaces that blend aesthetics with comfort",
     color: "from-amber-900 to-stone-900",
     slug: "interior",
-    image: "/projects/interior/int-3.jpg",
+    image: "/projects/interior/LOBY.jpg",
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const projects = [
     description: "Bespoke homes and apartments designed for modern living",
     color: "from-slate-800 to-slate-900",
     slug: "residential",
-    image: "/projects/residential/res-1.jpg",
+    image: "/projects/residential/ChatGPT%20Image%20Feb%2016,%202026,%2009_39_12%20AM.png",
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const projects = [
     description: "Office spaces, retail environments, and hospitality venues that inspire",
     color: "from-blue-900 to-slate-800",
     slug: "commercial",
-    image: "/projects/commercial/com-11.jpg",
+    image: "/projects/commercial/AZAD-SIR.jpg",
   },
   {
     id: 4,
@@ -68,10 +68,10 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
         />
 
         {/* Gradient overlay */}
-        <div className={`absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent`} />
+        <div className={`absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent`} />
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black/20 transition-all duration-500 group-hover:bg-black/40" />
+        <div className="absolute inset-0 bg-black/5 transition-all duration-500 group-hover:bg-black/20" />
 
         {/* Content */}
         <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
