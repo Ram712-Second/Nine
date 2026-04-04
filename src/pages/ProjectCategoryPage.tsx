@@ -30,7 +30,7 @@ const categoryData: Record<string, CategoryData> = {
       { id: 'int-9', img: '/projects/interior/int-9.jpg', url: '#', height: 400, title: 'LIVING SPACE', description: 'Modern living area' },
       { id: 'int-10', img: '/projects/interior/RESTURRENT%202.jpg', url: '#', height: 400, title: 'SUITE ROOM', description: 'Premium suite interior' },
       { id: 'int-11', img: '/projects/interior/deluxe-twin-bed-room.jpg', url: '#', height: 400, title: 'TWIN BEDROOM', description: 'Modern twin room design' },
-      { id: 'int-12', img: '/projects/interior/restaurant%20(1).jpg', url: '#', height: 400, title: 'FINE DINING', description: 'Exquisite restaurant design' },
+      { id: 'int-12', img: '/projects/interior/int-12.jpg', url: '#', height: 400, title: 'FINE DINING', description: 'Exquisite restaurant design' },
     ],
   },
   residential: {
@@ -41,7 +41,7 @@ const categoryData: Record<string, CategoryData> = {
       { id: 'res-1', img: '/projects/residential/ChatGPT%20Image%20Feb%2016,%202026,%2009_39_12%20AM.png', url: '#', height: 400, title: 'HARISREE RESIDENCY', description: 'Premium residential living' },
       { id: 'res-2', img: '/projects/residential/ChatGPT%20Image%20Feb%2016,%202026,%2010_59_03%20AM.png', url: '#', height: 400, title: 'RANI GATE', description: 'Traditional residential design' },
       { id: 'res-3', img: '/projects/residential/ChatGPT%20Image%20Feb%2016,%202026,%2009_41_01%20AM.png', url: '#', height: 400, title: 'HOLIDAY VISTA', description: 'Holiday home retreat' },
-      { id: 'res-4', img: '/projects/residential/getlstd-property-photo%20(2).jpg', url: '#', height: 400, title: 'SILVER SAND', description: 'Coastal residential property' },
+      { id: 'res-4', img: '/projects/residential/getlstd-property-photo%20%282%29.jpg', url: '#', height: 400, title: 'SILVER SAND', description: 'Coastal residential property' },
       { id: 'res-5', img: '/projects/residential/res-5.jpg', url: '#', height: 400, title: 'MODERN VILLA', description: 'Contemporary villa design' },
       { id: 'res-6', img: '/projects/residential/ChatGPT%20Image%20Feb%2014,%202026,%2002_41_02%20PM.png', url: '#', height: 400, title: 'CLASSIC REGENCY', description: 'Classic-style residence' },
       { id: 'res-7', img: '/projects/residential/res-7.jpg', url: '#', height: 400, title: 'URBAN LIVING', description: 'City apartment design' },
@@ -76,8 +76,8 @@ const categoryData: Record<string, CategoryData> = {
     subtitle: 'Exceptional Guest Experiences',
     description: 'Discover our hospitality projects featuring hotels, resorts, and venues designed for memorable experiences.',
     images: [
-      { id: 'hos-1', img: '/projects/hospitality/ANAMTHARA/getlstd-property-photo%20(1).jpg', url: '#', height: 400, title: 'ANAMTHARA EXTERIOR', description: 'Stunning exterior design' },
-      { id: 'hos-2', img: '/projects/hospitality/ANAMTHARA/banquet-hall-max-180%20(1).jpg', url: '#', height: 400, title: 'GRAND BANQUET', description: 'Luxury event venue' },
+      { id: 'hos-1', img: '/projects/hospitality/ANAMTHARA/getlstd-property-photo%20%281%29.jpg', url: '#', height: 400, title: 'ANAMTHARA EXTERIOR', description: 'Stunning exterior design' },
+      { id: 'hos-2', img: '/projects/hospitality/ANAMTHARA/banquet-hall-max-180%20%281%29.jpg', url: '#', height: 400, title: 'GRAND BANQUET', description: 'Luxury event venue' },
       { id: 'hos-3', img: '/projects/hospitality/SAVITRI%20HOTEL/NIGHT.jpg', url: '#', height: 400, title: 'SAVITRI NIGHT VIEW', description: 'Evening ambiance' },
       { id: 'hos-4', img: '/projects/hospitality/SAVITRI%20HOTEL/OUTDOOR.jpg', url: '#', height: 400, title: 'SAVITRI OUTDOOR', description: 'Beautiful outdoor spaces' },
       { id: 'hos-5', img: '/projects/hospitality/SAVITRI%20HOTEL/OUT%20DOOR.jpg', url: '#', height: 400, title: 'GARDEN VIEW', description: 'Scenic outdoor areas' },
@@ -87,7 +87,7 @@ const categoryData: Record<string, CategoryData> = {
       { id: 'hos-9', img: '/projects/hospitality/PERINGALAM%20RESORT/ChatGPT%20Image%20Feb%2016,%202026,%2012_03_05%20PM.png', url: '#', height: 400, title: 'PERINGALAM RESORT', description: 'Nature resort' },
       { id: 'hos-10', img: '/projects/hospitality/HOTEL%20EAST%20VENICE/ChatGPT%20Image%20Feb%2016,%202026,%2009_52_31%20AM.png', url: '#', height: 400, title: 'HOTEL EAST VENICE', description: 'Venetian elegance' },
       { id: 'hos-11', img: '/projects/hospitality/CLASSIC%20REGENCY/ChatGPT%20Image%20Feb%2014,%202026,%2002_41_02%20PM.png', url: '#', height: 400, title: 'CLASSIC REGENCY', description: 'Timeless hospitality' },
-      { id: 'hos-12', img: '/projects/hospitality/SILVER%20SAND/getlstd-property-photo%20(2).jpg', url: '#', height: 400, title: 'SILVER SAND', description: 'Beachfront paradise' },
+      { id: 'hos-12', img: '/projects/hospitality/SILVER%20SAND/getlstd-property-photo%20%282%29.jpg', url: '#', height: 400, title: 'SILVER SAND', description: 'Beachfront paradise' },
     ],
   },
 };
