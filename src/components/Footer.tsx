@@ -51,7 +51,7 @@ const Footer = () => {
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-white/60 text-sm font-light">
-            © 2025 9 Architects. All rights reserved.
+            © {new Date().getFullYear()} 9 Architects. All rights reserved.
           </p>
 
           <div className="flex gap-6">
