@@ -17,7 +17,7 @@ const masonryItems = [
   { id: "5", img: "/projects/residential/res-1.jpg", url: "#", height: 900, title: "Harisree Residency", description: "Premium living" },
   { id: "6", img: "/projects/residential/ChatGPT%20Image%20Feb%2016,%202026,%2010_59_03%20AM.png", url: "#", height: 700, title: "Rani Gate", description: "Luxury apartments" },
   { id: "7", img: "/projects/residential/ChatGPT%20Image%20Feb%2016,%202026,%2009_41_01%20AM.png", url: "#", height: 800, title: "Holiday Vista", description: "Scenic views" },
-  { id: "8", img: "/projects/residential/getlstd-property-photo%20(2).jpg", url: "#", height: 750, title: "Silver Sand", description: "Coastal property" },
+  { id: "8", img: "/projects/residential/getlstd-property-photo%20%282%29.jpg", url: "#", height: 750, title: "Silver Sand", description: "Coastal property" },
 
   // Commercial
   { id: "9", img: "/projects/commercial/AZAD-SIR.jpg", url: "#", height: 700, title: "AL BAYT KOOTTIKAL", description: "Commercial complex" },
