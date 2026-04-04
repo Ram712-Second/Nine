@@ -32,12 +32,12 @@ const projects = [
   },
   {
     id: 4,
-    title: "Renovation",
-    subtitle: "Transforming Possibilities",
-    description: "Breathing new life into existing structures with thoughtful redesign",
+    title: "Hospitality",
+    subtitle: "Exceptional Guest Experiences",
+    description: "Hotels, resorts, and venues designed for memorable guest experiences",
     color: "from-stone-800 to-gray-900",
-    slug: "renovation",
-    image: "/projects/renovation/ren-6.jpg",
+    slug: "hospitality",
+    image: "/projects/hospitality/ANAMTHARA/reception.jpg",
   },
 ];
 

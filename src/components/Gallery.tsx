@@ -5,18 +5,31 @@ import Masonry from './Masonry';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// --- TODO: Replace with your actual photo data ---
+// Gallery images - Mixed from all project categories
 const masonryItems = [
-  { id: "1", img: "https://picsum.photos/id/1015/600/900", url: "#", height: 900 },
-  { id: "2", img: "https://picsum.photos/id/1011/600/750", url: "#", height: 750 },
-  { id: "3", img: "https://picsum.photos/id/1020/600/800", url: "#", height: 800 },
-  { id: "4", img: "https://picsum.photos/id/1025/600/600", url: "#", height: 600 },
-  { id: "5", img: "https://picsum.photos/id/103/600/400", url: "#", height: 400 },
-  { id: "6", img: "https://picsum.photos/id/1043/600/800", url: "#", height: 800 },
-  { id: "7", img: "https://picsum.photos/id/1047/600/900", url: "#", height: 900 },
-  { id: "8", img: "https://picsum.photos/id/1050/600/500", url: "#", height: 500 },
-  { id: "9", img: "https://picsum.photos/id/106/600/900", url: "#", height: 900 },
-  { id: "10", img: "https://picsum.photos/id/1060/600/700", url: "#", height: 700 },
+  // Interior Design
+  { id: "1", img: "/projects/interior/int-3.jpg", url: "#", height: 850, title: "Interior Design", description: "Elegant spaces" },
+  { id: "2", img: "/projects/interior/reception.jpg", url: "#", height: 700, title: "ANAMTHARA Reception", description: "Grand entrance" },
+  { id: "3", img: "/projects/interior/banquet-hall-max-180.jpg", url: "#", height: 800, title: "Banquet Hall", description: "Event space" },
+  { id: "4", img: "/projects/interior/restaurant.jpg", url: "#", height: 650, title: "Restaurant Interior", description: "Fine dining" },
+
+  // Residential
+  { id: "5", img: "/projects/residential/res-1.jpg", url: "#", height: 900, title: "Harisree Residency", description: "Premium living" },
+  { id: "6", img: "/projects/residential/ChatGPT%20Image%20Feb%2016,%202026,%2010_59_03%20AM.png", url: "#", height: 700, title: "Rani Gate", description: "Luxury apartments" },
+  { id: "7", img: "/projects/residential/ChatGPT%20Image%20Feb%2016,%202026,%2009_41_01%20AM.png", url: "#", height: 800, title: "Holiday Vista", description: "Scenic views" },
+  { id: "8", img: "/projects/residential/getlstd-property-photo%20(2).jpg", url: "#", height: 750, title: "Silver Sand", description: "Coastal property" },
+
+  // Commercial
+  { id: "9", img: "/projects/commercial/AZAD-SIR.jpg", url: "#", height: 700, title: "AL BAYT KOOTTIKAL", description: "Commercial complex" },
+  { id: "10", img: "/projects/commercial/com-9.png", url: "#", height: 900, title: "Commercial Tower", description: "Modern workspace" },
+  { id: "11", img: "/projects/commercial/com-10.png", url: "#", height: 650, title: "Office Interior", description: "Professional space" },
+  { id: "12", img: "/projects/commercial/19.jpg", url: "#", height: 800, title: "KC Center", description: "Business hub" },
+
+  // Hospitality
+  { id: "13", img: "/projects/hospitality/ANAMTHARA/reception.jpg", url: "#", height: 900, title: "ANAMTHARA", description: "Elegant reception" },
+  { id: "14", img: "/projects/hospitality/SAVITRI%20HOTEL/LOBY.jpg", url: "#", height: 700, title: "SAVITRI Hotel", description: "Grand lobby" },
+  { id: "15", img: "/projects/hospitality/MARAMON%20RESORT/ChatGPT%20Image%20Feb%2016,%202026,%2011_41_14%20AM.png", url: "#", height: 600, title: "MARAMON Resort", description: "Riverside retreat" },
+  { id: "16", img: "/projects/hospitality/SAVITRI%20HOTEL/NIGHT.jpg", url: "#", height: 850, title: "Night View", description: "Evening ambiance" },
 ];
 
 const Gallery = () => {
@@ -75,7 +88,6 @@ const Gallery = () => {
                 height="100%"
                 src="https://www.youtube.com/embed/7lFuZ76c8zw?autoplay=1&mute=1"
                 title="YouTube video player 2"
-                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="rounded-lg shadow-lg"
