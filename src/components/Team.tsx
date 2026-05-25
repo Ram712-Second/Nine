@@ -81,11 +81,11 @@ const Team = () => {
                   className="pl-4 basis-[60%] sm:basis-[40%] lg:basis-1/4"
                 >
                   <div className="group relative overflow-hidden rounded-xl">
-                    <div className="aspect-[3/4] max-h-[320px] overflow-hidden">
+                    <div className="aspect-[3/4] h-[400px] overflow-hidden">
                       <img
                         src={member.image}
                         alt={member.name}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
                       />
                     </div>
 
