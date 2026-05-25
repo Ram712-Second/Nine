@@ -9,7 +9,6 @@ import About from '@/components/About';
 import ClientLogos from '@/components/ClientLogos';
 import Services from '@/components/Services';
 import Projects from '@/components/Projects';
-import Process from '@/components/Process';
 import Testimonials from '@/components/Testimonials';
 import Team from '@/components/Team';
 import Contact from '@/components/Contact';
@@ -43,9 +42,8 @@ const Index = () => {
           <ClientLogos />
           <Services />
           <Projects />
-          <Process />
-          <Testimonials />
           <Team />
+          <Testimonials />
           <Contact />
           <WhatsAppButton />
         </Layout>
