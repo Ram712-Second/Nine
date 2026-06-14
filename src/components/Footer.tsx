@@ -44,7 +44,7 @@ const Footer = () => {
               <p>Archana Towers, Asramam</p>
               <p>Kollam - 691001, Kerala</p>
               <p>info@9architects.net</p>
-              <p>94477 18390, 99950 99000</p>
+              <p>99950 99000</p>
             </div>
           </div>
         </div>
